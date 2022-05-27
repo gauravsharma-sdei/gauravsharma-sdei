@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+    var display=document.getElementsByClassName("displayArea");
+    var display1=document.getElementsByClassName("displayArea1");
+    var display2=document.getElementsByClassName("displayArea2");
+    function getPos(e){
+        x=e.clientX;
+        y=e.clientY;
+        for(let j=0;j<display.length; j++){
+				display[j].style.display='none';
+			}
+            for(let j=0;j<display1.length; j++){
+				display1[j].style.display='none';
+			}
+            for(let j=0;j<display2.length; j++){
+                display2[j].style.display='none';
+            }
+        temp=JSON.parse('{{coor}}');
+        console.log(temp[0][0]);
+        for(let i=0;i<temp[0].length; i++){
+        if (y>=temp[0][i][1]-5 && y<=temp[0][i][1]+5 && x>=temp[0][i][0]-5 && x<=temp[0][i][0]+5){
+            
+        display[i].style.display='block';
+        }
+        }
+        for(let i=0;i<temp[1].length; i++){
+        if (y>=temp[1][i][1]-5 && y<=temp[1][i][1]+5 && x>=temp[1][i][0]-5 && x<=temp[1][i][0]+5){
+        display1[i].style.display='block';
+        }
+        }
+        for(let i=0;i<temp[2].length; i++){
+        if (y>=temp[2][i][1]-5 && y<=temp[2][i][1]+5 && x>=temp[2][i][0]-5 && x<=temp[2][i][0]+5){
+        display2[i].style.display='block';
+        }
+        }
+        
+    }
+
+    </script>
+</head>
+<style>
+    body{
+        display: flex;
+    }
+    #focusArea img{
+        width: 800px;
+        height: 500px;
+    }
+    #focusArea p{
+        margin: 0px;
+
+
+    }
+    .displayArea {
+		display: none;
+		background-color: blue;
+		color: #fff;
+		padding: 10px 10px;
+		height: fit-content;
+		margin: 10px;
+	}
+
+	.displayArea1 {
+		display: none;
+		background-color: black;
+		color: #fff;
+		padding: 10px 10px;
+		height: fit-content;
+	}
+
+	.displayArea2{
+		display: none;
+		background-color: red;
+		color: #fff;
+		padding: 10px 10px;
+		height: fit-content;
+		margin: 10px;
+	}
+</style>
+
+<body>
+    <div id="focusArea" onmousemove="getPos(event)" onmouseout="stopTracking()"><p><img src="{{img}}" alt=""></p></div>
+    <div class="content">
+    {% for i in range(data|length) %}
+    <p class="displayArea">{{data[i]|safe}}</p>
+    {% endfor %}
+    {% for i in range(data1|length) %}
+    <p class="displayArea1">{{data1[i]|safe}}</p>
+    {% endfor %}
+     {% for i in range(data2|length) %}
+    <p class="displayArea2">{{data2[i]|safe}}</p>
+    {% endfor %}
+</div>
+</body>
+</html>
